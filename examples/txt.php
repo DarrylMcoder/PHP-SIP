@@ -38,7 +38,7 @@
  
       $res = $api->send();
  
-    /*  if ($res == 200) { 
+      if ($res == 200) { 
         $api->setMethod('REFER');
         $api->addHeader('Refer-to: '.$to);
         $api->addHeader('Referred-By: sip:c2c@'.$api->getSrcIp());
@@ -63,7 +63,7 @@
       echo "Opps... Caught exception:";
       echo $e;
     }
- */
+ 
   ?>
   </pre>
   <hr />
