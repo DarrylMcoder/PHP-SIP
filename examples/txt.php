@@ -41,6 +41,7 @@
       $api->setUri($to);
  
       $res = $api->send();
+      echo $api->getBody();
  
       if ($res == 200) { 
         $api->listen('MESSAGE');
