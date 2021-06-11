@@ -799,6 +799,7 @@ class PhpSIP
    * Sends data
    */
   private function sendData($data)
+    echo $data;
   {
     if (!$this->host)
     {
