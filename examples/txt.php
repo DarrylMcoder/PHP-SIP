@@ -5,11 +5,11 @@
  
 <body>
  
-<?php if (isset($_POST['from']) && isset($_POST['to'])) : ?>
+<?php if (isset($_POST['to'])) : ?>
  
   <?php require_once('..//PhpSIP.class.php') ?>
  
-  <?php $from = $_POST['from']; $to = $_POST['to'] ?>
+  <?php $to = $_POST['to'] ?>
  
   Trying call from <?php echo $from ?> to <?php echo $to ?> ...<br />
  
@@ -34,21 +34,16 @@
       $api->addHeader('Subject: click2call');
       $api->setMethod('MESSAGE');
       $api->setFrom('sip:c2c@'.$api->getSrcIp());
-      $api->setUri($from);
+      $api->setUri($to);
  
       $res = $api->send();
  
       if ($res == 200) { 
-        $api->setMethod('REFER');
-        $api->addHeader('Refer-to: '.$to);
-        $api->addHeader('Referred-By: sip:c2c@'.$api->getSrcIp());
+        $api->listen('MESSAGE');
+        $api->reply(200,'OK');
+        $api->setMethod('MESSAGE');
+        $api->addHeader('OK');
         $api->send();
- 
-        $api->setMethod('BYE');
-        $api->send();
- 
-        $api->listen('NOTIFY');
-        $api->reply(481,'Call Leg/Transaction Does Not Exist');
       }
  
       if ($res == 'No final response in 5 seconds.') {
