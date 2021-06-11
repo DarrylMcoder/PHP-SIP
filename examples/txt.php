@@ -12,7 +12,7 @@
   <?php $to = $_POST['to'] ?>
   <?php $msg = $_POST['msg'] ?>
  
-  Trying call from <?php echo $from ?> to <?php echo $to ?> ...<br />
+  Trying to send  <?php echo $msg ?> to <?php echo $to ?> ...<br />
  
   <?php flush() ?>
  
