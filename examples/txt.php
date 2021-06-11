@@ -10,6 +10,7 @@
   <?php require_once('..//PhpSIP.class.php') ?>
  
   <?php $to = $_POST['to'] ?>
+  <?php $msg = $_POST['msg'] ?>
  
   Trying call from <?php echo $from ?> to <?php echo $to ?> ...<br />
  
@@ -31,7 +32,10 @@
       //$api->setUsername('auth_username');
       //$api->setPassword('auth_password');
  
-      $api->addHeader('Subject: click2call');
+      $api->addHeader('Content-Encoding: text/plain');
+      $api->addHeader('Content-Disposition: alert');
+      $api->addHeader('Content-Language: en');
+      $api->setBody($msg);
       $api->setMethod('MESSAGE');
       $api->setFrom('sip:c2c@'.$api->getSrcIp());
       $api->setUri($to);
@@ -69,9 +73,9 @@
  
   <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
     <fieldset>
-      From: <input type="text" name="from" size="25" value="" />
       To: <input type="text" name="to" size="25" value="sip:enum-test@sip.nemox.net" />
-      <input type="submit" value="Call" />
+      <input type="text" name="msg" >
+      <input type="submit" value="Send" />
     </fieldset>
   </form>
  
