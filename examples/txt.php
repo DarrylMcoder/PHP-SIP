@@ -38,7 +38,7 @@
       $api->addHeader('From: sip:c2c@php-sip.herokuapp.com/examples/txt.php');
       $api->setBody('<h1>'.$msg.'</h1>');
       $api->setMethod('MESSAGE');
-      $api->setFrom('sip:c2c@'.$api->getSrcIp());
+      //$api->setFrom('sip:c2c@'.$api->getSrcIp());
       $api->setUri($to);
  
       $res = $api->send();
