@@ -7,7 +7,7 @@ $bindIP = '192.168.5.65'; // <-- change this to your own IP
 
 try
 {
-  $api = new PhpSIP($bindIP);
+  $api = new PhpSIP();
   $api->setDebug(true);
   $api->setMethod('OPTIONS');
   $api->setFrom('sip:anonymous@localhost');

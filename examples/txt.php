@@ -35,7 +35,7 @@
       $api->addHeader('Content-Encoding: text/plain');
       $api->addHeader('Content-Disposition: alert');
       $api->addHeader('Content-Language: en');
-      $api->addHeader('Content-Type: text/html');
+     // $api->addHeader('');
       $api->setBody('<h1>'.$msg.'</h1>');
       $api->setMethod('MESSAGE');
       $api->setFrom('sip:c2c@'.$api->getSrcIp());
