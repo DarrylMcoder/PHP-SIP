@@ -1,5 +1,6 @@
 <?PHP
     
+try{
 require('../PhpSIP.class.php');
 
 $api = new \PhpSIP();
@@ -10,5 +11,10 @@ $api->setTo("sip:darryl@sip.onsip.com");
 $api->setContact("sip:c2c@".$api->getSrcIp());
 $api->addHeader("Expires: 86400");
 echo $api->send();
+} catch (Exception $e) {
+ 
+      echo "Opps... Caught exception:";
+      echo $e;
+}
     
 ?>
