@@ -58,9 +58,9 @@ while (true)
     unset($read); 
 
     $j = 0; 
-
+  if(isset($client)){
     if (count($client)) 
-    { 
+    {
         foreach ($client as $k => $v) 
         { 
             $read[$j] = $v; 
@@ -68,6 +68,7 @@ while (true)
             $j++; 
         } 
     } 
+  }
 
     $client = $read; 
 
