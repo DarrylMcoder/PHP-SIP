@@ -85,9 +85,9 @@ while (true)
             $j++; 
         } 
     } 
-
+  if(isset($client)){
     if (count($client)) 
-    { 
+    {
         foreach ($client as $k => $v) 
         { 
             if (@socket_recv($v, $string, 1024, MSG_DONTWAIT) === 0)
@@ -105,6 +105,7 @@ while (true)
             } 
         } 
     } 
+  }
 
     //echo "."; 
 
