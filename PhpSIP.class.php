@@ -49,7 +49,7 @@ class PhpSIP
   /**
    * Final Response timer (in ms)
    */
-  private $fr_timer = 10000;
+  private $fr_timer = 100000;
   
   /**
    * Lock file
