@@ -127,3 +127,17 @@ while (true)
 
 // Close the master sockets 
 socket_close($sock); 
+?>
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+  </head>
+  <body>
+    <form action="" method="post">
+      <input type="text" name="to">
+      <input type="submit">
+    </form>
+  </body>
+</html>
