@@ -832,7 +832,7 @@ class PhpSIP
     
     if (!@socket_sendto($this->socket, $data, strlen($data), 0, $ip_address, $this->port))
     {
-      $err_no = socket_last_error($this->socket);
+      $err_no = socket_strerror(socket_last_error($this->socket));
       throw new PhpSIPException("Failed to send data to ".$ip_address.":".$this->port.". Source IP ".$this->src_ip.", source port: ".$this->src_port.". ".socket_strerror($err_no));
     }
     
@@ -901,7 +901,7 @@ class PhpSIP
   {
     if (!@socket_set_option($this->socket, SOL_SOCKET, SO_RCVTIMEO, array("sec"=>0,"usec"=>0)))
     {
-      $err_no = socket_last_error($this->socket);
+      $err_no = socket_strerror(socket_last_error($this->socket));
       throw new PhpSIPException (socket_strerror($err_no));
     }
     
@@ -919,7 +919,7 @@ class PhpSIP
     
     if (!@socket_recvfrom($this->socket, $this->rx_msg, 10000, 0, $from, $port))
     {
-      $this->res_code = "No final response in ".round($this->fr_timer/1000,3)." seconds. (".socket_last_error($this->socket).")";
+      $this->res_code = "No final response in ".round($this->fr_timer/1000,3)." seconds. (".socket_strerror(socket_strerror(socket_last_error($this->socket))).")";
       return $this->res_code;
     }
     
@@ -1571,13 +1571,13 @@ class PhpSIP
     
     if (!$this->socket = @socket_create(AF_INET, SOCK_DGRAM, SOL_UDP))
     {
-      $err_no = socket_last_error($this->socket);
+      $err_no = socket_strerror(socket_last_error($this->socket));
       throw new PhpSIPException (socket_strerror($err_no));
     }
     
     if (!@socket_bind($this->socket, $this->src_ip, $this->src_port))
     {
-      $err_no = socket_last_error($this->socket);
+      $err_no = socket_strerror(socket_last_error($this->socket));
       throw new PhpSIPException ("Failed to bind ".$this->src_ip.":".$this->src_port." ".socket_strerror($err_no));
     }
     
@@ -1589,13 +1589,13 @@ class PhpSIP
     
     if (!@socket_set_option($this->socket, SOL_SOCKET, SO_RCVTIMEO, array("sec"=>$sec,"usec"=>$usec)))
     {
-      $err_no = socket_last_error($this->socket);
+      $err_no = socket_strerror(socket_last_error($this->socket));
       throw new PhpSIPException (socket_strerror($err_no));
     }
     
     if (!@socket_set_option($this->socket, SOL_SOCKET, SO_SNDTIMEO, array("sec"=>5,"usec"=>0)))
     {
-      $err_no = socket_last_error($this->socket);
+      $err_no = socket_strerror(socket_last_error($this->socket));
       throw new PhpSIPException (socket_strerror($err_no));
     }
   }
