@@ -801,7 +801,6 @@ class PhpSIP
   private function sendData($data)
    
   {
-    echo $data;
     if (!$this->host)
     {
       throw new PhpSIPException("Can't send data, host undefined");
