@@ -62,7 +62,7 @@ while (true)
     if (count($client)) 
     {
         foreach ($client as $k => $v) 
-        { 
+        {
             $read[$j] = $v; 
 
             $j++; 
@@ -76,7 +76,7 @@ while (true)
     { 
         if (is_resource($newsock)) 
         { 
-            socket_write($newsock, $file ).chr(0); 
+            socket_write($newsock, $file );
             
             echo "New client connected $j"; 
 
