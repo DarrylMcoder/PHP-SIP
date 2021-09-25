@@ -1752,7 +1752,7 @@ class PhpSIP
         {
           $this->reply(200,'OK');
           return false;
-        }elseif(in_array($this->req_method, $methods){
+        }elseif(in_array($this->req_method, $methods)){
            return $this->req_method;
          }
   }
