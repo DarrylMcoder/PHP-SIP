@@ -11,7 +11,7 @@ set_time_limit (0);
 $file = file_get_contents("http://ytapp.darrylmcoder.epizy.com/output.mp4");
 
 // Set the ip and port we will listen on 
-$address = $_SERVER['SERVER_ADDR']; 
+$address = isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : gethostbynamel(php_uname('n'))[0]; 
 $port = 8000; 
 
 // Create a TCP Stream socket 
@@ -42,7 +42,7 @@ try{
       $api->addHeader('Subject: click2call');
       $api->setMethod('INVITE');
       $api->setFrom('sip:c2c@'.$api->getSrcIp());
-      $api->setUri($_POST['to']);
+      $api->setUri('sip:+15195899829@sip.linphone.org');
  
       $res = $api->send();
  
