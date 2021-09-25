@@ -858,7 +858,7 @@ class PhpSIP
     
     if ($this->debug)
     {
-      echo "Listenning for ".implode(", ",$methods)."\n";
+      echo "Listening for ".implode(", ",$methods)."\n";
     }
     
     if ($this->server_mode)
@@ -1733,6 +1733,28 @@ class PhpSIP
     }
     
     return $output;
+  }
+  
+  public function was_recvd($method)
+    { 
+    if (!is_array($methods))
+    {
+      $methods = array($methods);
+    }
+    
+    if ($this->debug)
+    {
+      echo "Checking for ".implode(", ",$methods)."\n";
+    }
+        $this->readMessage(); 
+        
+        if ($this->rx_msg && !in_array($this->req_method, $methods))
+        {
+          $this->reply(200,'OK');
+          return false;
+        }elseif(in_array($this->req_method, $methods){
+           return $this->req_method;
+         }
   }
 }
 
