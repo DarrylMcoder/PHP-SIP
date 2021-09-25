@@ -919,7 +919,7 @@ class PhpSIP
     
     if (!@socket_recvfrom($this->socket, $this->rx_msg, 10000, 0, $from, $port))
     {
-      $this->res_code = "No final response in ".round($this->fr_timer/1000,3)." seconds. (".socket_strerror(socket_strerror(socket_last_error($this->socket))).")";
+      $this->res_code = "No final response in ".round($this->fr_timer/1000,3)." seconds. (".socket_strerror(socket_last_error($this->socket)).")";
       return $this->res_code;
     }
     
