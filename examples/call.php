@@ -68,7 +68,7 @@ while (true)
     } 
   }
 
-    $client = $read; 
+    $client = isset($read) ? $read : array(); 
 
     if ($newsock = @socket_accept($sock)) 
     { 
