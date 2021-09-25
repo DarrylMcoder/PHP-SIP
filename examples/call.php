@@ -104,6 +104,11 @@ while (true)
         } 
     } 
   }
+  
+  if($api->was_recvd("BYE")){
+    $api->reply(200,"OK");
+    break;
+  }
 
     echo ".\r\n"; 
     ob_flush();
