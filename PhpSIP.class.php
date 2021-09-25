@@ -1737,23 +1737,20 @@ class PhpSIP
   
   public function was_recvd($method)
     { 
-    if (!is_array($methods))
-    {
-      $methods = array($methods);
-    }
-    
     if ($this->debug)
     {
-      echo "Checking for ".implode(", ",$methods)."\n";
+      echo "Checking for ".$method."\n";
     }
         $this->readMessage(); 
         
-        if ($this->rx_msg && !in_array($this->req_method, $methods))
+        if ($this->rx_msg && $this->req_method !== $method)
         {
           $this->reply(200,'OK');
           return false;
-        }elseif(in_array($this->req_method, $methods)){
+        }elseif($this->rx_msg && $this->req_method === $method){
            return $this->req_method;
+         }else{
+           return false;
          }
   }
 }
