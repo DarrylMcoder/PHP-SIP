@@ -52,8 +52,6 @@ try{
 // Loop continuously 
 while (true) 
 { 
-  echo "Line:";
-  flush();
   
     unset($read); 
 
@@ -107,8 +105,9 @@ while (true)
     } 
   }
 
-    //echo "."; 
-
+    echo ".\r\n"; 
+    ob_flush();
+    flush();
     sleep(1); 
 } 
 
