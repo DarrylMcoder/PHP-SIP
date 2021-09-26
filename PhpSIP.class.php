@@ -832,7 +832,7 @@ class PhpSIP
     
     if (!@socket_sendto($this->socket, $data, strlen($data), 0, $ip_address, $this->port))
     {
-      $err_no = socket_strerror(socket_last_error($this->socket));
+      $err_no = socket_last_error($this->socket);
       throw new PhpSIPException("Failed to send data to ".$ip_address.":".$this->port.". Source IP ".$this->src_ip.", source port: ".$this->src_port.". ".socket_strerror($err_no));
     }
     
@@ -917,7 +917,7 @@ class PhpSIP
     $port = 0;
     $this->rx_msg = null;
     
-    while($c = socket_recvfrom($this->socket, $this->response, 10000, 0, $from, $port) && socket_last_error($this->socket) === 4){
+    while($c = socket_recvfrom($this->socket, $this->rx_msg, 10000, 0, $from, $port) && socket_last_error($this->socket) === 4){
       if(!$c){
         $this->res_code = "No final response in ".round($this->fr_timer/1000,3)." seconds. (".socket_strerror(socket_last_error($this->socket)).")";
       return $this->res_code;
