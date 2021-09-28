@@ -3,7 +3,7 @@
 class myPhpSIP extends PhpSIP{
   
   
-  protected function readMessage($block)
+  protected function readMessage($block = true)
   {
      if($block === false){
       socket_set_nonblock($this->socket);
