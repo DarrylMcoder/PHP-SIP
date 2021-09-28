@@ -54,6 +54,50 @@ class myPhpSIP extends PhpSIP{
     }
   }
   
+  public function setMethod($method)
+  {
+    if (!in_array($method,$this->allowed_methods))
+    {
+      throw new PhpSIPException('Invalid method.');
+    }
+    
+    $this->method = $method;
+    
+    if ($method == 'INVITE')
+    {
+      $body = "v=0\r\n";
+      $body.= "o=click2dial 0 0 IN IP4 "."php-sip.herokuapp.com"."\r\n";
+      $body.= "s=click2dial call\r\n";
+      $body.= "c=IN IP4 "."php-sip.herokuapp.com"."\r\n";
+      $body.= "t=0 0\r\n";
+      $body.= "m=video 8000 RTP/AVP 0 8 18 3 4 97 98\r\n";
+      $body.= "a=rtpmap:0 PCMU/8000\r\n";
+      $body.= "a=rtpmap:18 G729/8000\r\n";
+      $body.= "a=rtpmap:97 ilbc/8000\r\n";
+      $body.= "a=rtpmap:98 speex/8000\r\n";
+      
+      $this->body = $body;
+      
+      $this->setContentType(null);
+    }
+    
+    if ($method == 'REFER')
+    {
+      $this->setBody('');
+    }
+    
+    if ($method == 'CANCEL')
+    {
+      $this->setBody('');
+      $this->setContentType(null);
+    }
+    
+    if ($method == 'MESSAGE' && !$this->content_type)
+    {
+      $this->setContentType(null);
+    }
+  }
+  
   public function was_recvd($method)
     { 
     if ($this->debug)
