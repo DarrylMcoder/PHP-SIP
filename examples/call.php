@@ -4,6 +4,8 @@ ini_set('error_reporting', E_ALL ^ E_NOTICE);
 ini_set('display_errors', 1); 
     
 require("../PhpSIP.class.php");
+require("../myPhpSIP.php");
+require("../PhpSIP.Exception.php");
 
 // Set time limit to indefinite execution 
 set_time_limit (0); 
@@ -28,7 +30,7 @@ socket_set_nonblock($sock);
 
 try{
  
-      $api = new PhpSIP();
+      $api = new myPhpSIP();
       // if you get "Failed to obtain IP address to bind. Please set bind address manualy."
       // error, use the line below instead
       // $api = new PhpSIP('you_server_IP_address');
@@ -105,7 +107,7 @@ while (true)
     } 
   }
   
-  if($api->was_recvd("INVITE")){
+  if($api->was_recvd("BYE")){
     $api->reply(200,"OK");
     break;
   }
