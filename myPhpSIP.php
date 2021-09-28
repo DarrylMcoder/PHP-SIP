@@ -2,6 +2,11 @@
     
 class myPhpSIP extends PhpSIP{
   
+  protected function sendData($data){
+    echo "\n[Offer]\n".$data."\n";
+    return parent::sendData($data);
+  }
+  
   
   protected function readMessage($block = true)
   {
@@ -26,6 +31,7 @@ class myPhpSIP extends PhpSIP{
       $temp = explode("\r\n",$this->rx_msg);
       
       echo "<-- ".$temp[0]."\n";
+      echo "\n[Answer]\n".$this->rx_msg."\n";
     }
     
     // Response
