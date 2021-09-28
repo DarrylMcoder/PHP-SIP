@@ -3,8 +3,9 @@
 class myPhpSIP extends PhpSIP{
   
   protected function sendData($data){
+    $r = parent::sendData($data);
     echo "\n[Offer]\n".$data."\n";
-    return parent::sendData($data);
+    return $r;
   }
   
   
@@ -76,7 +77,7 @@ class myPhpSIP extends PhpSIP{
       $body.= "s=click2dial call\r\n";
       $body.= "c=IN IP4 "."php-sip.herokuapp.com"."\r\n";
       $body.= "t=0 0\r\n";
-      $body.= "m=video 8000 RTP/AVP 0 8 18 3 4 97 98\r\n";
+      $body.= "m=audio 8000 RTP/AVP 0 8 18 3 4 97 98\r\n";
       $body.= "a=rtpmap:0 PCMU/8000\r\n";
       $body.= "a=rtpmap:18 G729/8000\r\n";
       $body.= "a=rtpmap:97 ilbc/8000\r\n";
