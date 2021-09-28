@@ -49,7 +49,7 @@ class PhpSIP
   /**
    * Final Response timer (in ms)
    */
-  private $fr_timer = 100000;
+  private $fr_timer = 10000;
   
   /**
    * Lock file
@@ -799,7 +799,6 @@ class PhpSIP
    * Sends data
    */
   private function sendData($data)
-   
   {
     if (!$this->host)
     {
@@ -858,7 +857,7 @@ class PhpSIP
     
     if ($this->debug)
     {
-      echo "Listening for ".implode(", ",$methods)."\n";
+      echo "Listenning for ".implode(", ",$methods)."\n";
     }
     
     if ($this->server_mode)
@@ -901,7 +900,7 @@ class PhpSIP
   {
     if (!@socket_set_option($this->socket, SOL_SOCKET, SO_RCVTIMEO, array("sec"=>0,"usec"=>0)))
     {
-      $err_no = socket_strerror(socket_last_error($this->socket));
+      $err_no = socket_last_error($this->socket);
       throw new PhpSIPException (socket_strerror($err_no));
     }
     
@@ -917,11 +916,10 @@ class PhpSIP
     $port = 0;
     $this->rx_msg = null;
     
-    while($c = socket_recvfrom($this->socket, $this->rx_msg, 10000, 0, $from, $port) && socket_last_error($this->socket) === 4){
-      if(!$c){
-        $this->res_code = "No final response in ".round($this->fr_timer/1000,3)." seconds. (".socket_strerror(socket_last_error($this->socket)).")";
+    if (!@socket_recvfrom($this->socket, $this->rx_msg, 10000, 0, $from, $port))
+    {
+      $this->res_code = "No final response in ".round($this->fr_timer/1000,3)." seconds. (".socket_last_error($this->socket).")";
       return $this->res_code;
-      }
     }
     
     if ($this->debug)
@@ -1572,13 +1570,13 @@ class PhpSIP
     
     if (!$this->socket = @socket_create(AF_INET, SOCK_DGRAM, SOL_UDP))
     {
-      $err_no = socket_strerror(socket_last_error($this->socket));
+      $err_no = socket_last_error($this->socket);
       throw new PhpSIPException (socket_strerror($err_no));
     }
     
     if (!@socket_bind($this->socket, $this->src_ip, $this->src_port))
     {
-      $err_no = socket_strerror(socket_last_error($this->socket));
+      $err_no = socket_last_error($this->socket);
       throw new PhpSIPException ("Failed to bind ".$this->src_ip.":".$this->src_port." ".socket_strerror($err_no));
     }
     
@@ -1590,13 +1588,13 @@ class PhpSIP
     
     if (!@socket_set_option($this->socket, SOL_SOCKET, SO_RCVTIMEO, array("sec"=>$sec,"usec"=>$usec)))
     {
-      $err_no = socket_strerror(socket_last_error($this->socket));
+      $err_no = socket_last_error($this->socket);
       throw new PhpSIPException (socket_strerror($err_no));
     }
     
     if (!@socket_set_option($this->socket, SOL_SOCKET, SO_SNDTIMEO, array("sec"=>5,"usec"=>0)))
     {
-      $err_no = socket_strerror(socket_last_error($this->socket));
+      $err_no = socket_last_error($this->socket);
       throw new PhpSIPException (socket_strerror($err_no));
     }
   }
@@ -1727,25 +1725,6 @@ class PhpSIP
     }
     
     return $output;
-  }
-  
-  public function was_recvd($method)
-    { 
-    if ($this->debug)
-    {
-      echo "Checking for ".$method."\n";
-    }
-        $this->readMessage(); 
-        
-        if ($this->rx_msg && $this->req_method !== $method)
-        {
-          $this->reply(200,'OK');
-          return false;
-        }elseif($this->rx_msg && $this->req_method === $method){
-           return $this->req_method;
-         }else{
-           return false;
-         }
   }
 }
 
