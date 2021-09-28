@@ -5,7 +5,6 @@ ini_set('display_errors', 1);
     
 require("../PhpSIP.class.php");
 require("../myPhpSIP.php");
-require("../PhpSIP.Exception.php");
 
 // Set time limit to indefinite execution 
 set_time_limit (0); 
