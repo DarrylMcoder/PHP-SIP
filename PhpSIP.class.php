@@ -34,206 +34,206 @@ require_once 'PhpSIP.Exception.php';
 
 class PhpSIP
 {
-  private $debug = false;
+  protected $debug = false;
   
   /**
    * Min port
    */
-  private $min_port = 5065;
+  protected $min_port = 5065;
   
   /**
    * Max port
    */
-  private $max_port = 5265;
+  protected $max_port = 5265;
   
   /**
    * Final Response timer (in ms)
    */
-  private $fr_timer = 10000;
+  protected $fr_timer = 10000;
   
   /**
    * Lock file
    */
-  private $lock_file = '/tmp/PhpSIP.lock';
+  protected $lock_file = '/tmp/PhpSIP.lock';
   
   /**
    * Persistent Lock file 
    */
-  private $persistent_lock_file = true;
+  protected $persistent_lock_file = true;
   
   /**
    * Allowed methods array
    */
-  private $allowed_methods = array(
+  protected $allowed_methods = array(
     "CANCEL","NOTIFY", "INVITE","BYE","REFER","OPTIONS","SUBSCRIBE","MESSAGE", "PUBLISH", "REGISTER"
   );
   
-  private $server_mode = false;
+  protected $server_mode = false;
   
   /**
    * Dialog established
    */
-  private $dialog = false;
+  protected $dialog = false;
   
   /**
    * The opened socket we listen for incoming SIP messages
    */
-  private $socket;
+  protected $socket;
   
   /**
    * Source IP address
    */
-  private $src_ip;
+  protected $src_ip;
   
   /**
    * Source IP address
    */
-  private $user_agent = 'PHP SIP';
+  protected $user_agent = 'PHP SIP';
   
   /**
    * CSeq
    */
-  private $cseq = 20;
+  protected $cseq = 20;
   
   /**
    * Source port
    */
-  private $src_port;
+  protected $src_port;
   
   /**
    * Call ID
    */
-  private $call_id;
+  protected $call_id;
   
   /**
    * Contact
    */
-  private $contact;
+  protected $contact;
   
   /**
    * Request URI
    */
-  private $uri;
+  protected $uri;
   
   /**
    * Request host
    */
-  private $host;
+  protected $host;
   
   /**
    * Request port
    */
-  private $port = 5060;
+  protected $port = 5060;
   
   /**
    * Outboud SIP proxy
    */
-  private $proxy;
+  protected $proxy;
   
   /**
    * Method
    */
-  private $method;
+  protected $method;
   
   /**
    * Auth username
    */
-  private $username;
+  protected $username;
   
   /**
    * Auth password
    */
-  private $password;
+  protected $password;
   
   /**
    * To
    */
-  private $to;
+  protected $to;
   
   /**
    * To tag
    */
-  private $to_tag;
+  protected $to_tag;
   
   /**
    * From
    */
-  private $from;
+  protected $from;
   
   /**
    * From User
    */
-  private $from_user;
+  protected $from_user;
 
   /**
    * From tag
    */
-  private $from_tag;
+  protected $from_tag;
   
   /**
    * Via tag
    */
-  private $via;
+  protected $via;
   
   /**
    * Content type
    */
-  private $content_type;
+  protected $content_type;
   
   /**
    * Body
    */
-  private $body;
+  protected $body;
   
   /**
    * Received SIP message
    */
-  private $rx_msg;
+  protected $rx_msg;
   
   /**
    * Received Response
    */
-  private $res_code;
-  private $res_contact;
-  private $res_cseq_method;
-  private $res_cseq_number;
+  protected $res_code;
+  protected $res_contact;
+  protected $res_cseq_method;
+  protected $res_cseq_number;
 
   /**
    * Received Request
    */
-  private $req_method;
-  private $req_cseq_method;
-  private $req_cseq_number;
-  private $req_contact;
-  private $req_from;
-  private $req_from_tag;
-  private $req_to;
-  private $req_to_tag;
+  protected $req_method;
+  protected $req_cseq_method;
+  protected $req_cseq_number;
+  protected $req_contact;
+  protected $req_from;
+  protected $req_from_tag;
+  protected $req_to;
+  protected $req_to_tag;
   
   /**
    * Authentication
    */
-  private $auth;
+  protected $auth;
   
   /**
    * Routes
    */
-  private $routes = array();
+  protected $routes = array();
   
   /**
    * Record-route
    */
-  private $record_route = array();
+  protected $record_route = array();
   
   /**
    * Request vias
    */
-  private $request_via = array();
+  protected $request_via = array();
   
   /**
    * Additional headers
    */
-  private $extra_headers = array();
+  protected $extra_headers = array();
   
   /**
    * Constructor
@@ -332,7 +332,7 @@ class PhpSIP
   /**
    * Gets port number to bind
    */
-  private function getPort()
+  protected function getPort()
   {
     if ($this->src_port)
     {
@@ -425,7 +425,7 @@ class PhpSIP
   /**
    * Releases port
    */
-  private function releasePort()
+  protected function releasePort()
   {
     if ($this->lock_file === null)
     {
@@ -798,7 +798,7 @@ class PhpSIP
   /**
    * Sends data
    */
-  private function sendData($data)
+  protected function sendData($data)
   {
     if (!$this->host)
     {
@@ -910,7 +910,7 @@ class PhpSIP
   /**
    * Reads incoming SIP message
    */
-  private function readMessage()
+  protected function readMessage()
   {
     $from = "";
     $port = 0;
@@ -958,7 +958,7 @@ class PhpSIP
   /**
    * Parse Response
    */
-  private function parseResponse()
+  protected function parseResponse()
   {
     // Request via
     $m = array();
@@ -1000,7 +1000,7 @@ class PhpSIP
   /**
    * Parse Request
    */
-  private function parseRequest()
+  protected function parseRequest()
   {
     $temp = explode("\r\n",$this->rx_msg);
     $temp = explode(" ",$temp[0]);
@@ -1138,7 +1138,7 @@ class PhpSIP
   /**
    * ACK
    */
-  private function ack()
+  protected function ack()
   {
     if ($this->res_cseq_method == 'INVITE' && $this->res_code == '200')
     {
@@ -1211,7 +1211,7 @@ class PhpSIP
    * 
    * @return string
    */
-  private function formatRequest()
+  protected function formatRequest()
   {
     if ($this->res_contact && in_array($this->method,array('BYE','REFER','SUBSCRIBE')))
     {
@@ -1353,7 +1353,7 @@ class PhpSIP
   /**
    * Sets Via header
    */
-  private function setVia()
+  protected function setVia()
   {
     $rand = rand(100000,999999);
     $this->via = 'SIP/2.0/UDP '.$this->src_ip.':'.$this->src_port.';rport;branch=z9hG4bK'.$rand;
@@ -1448,7 +1448,7 @@ class PhpSIP
    * Calculates Digest authentication response
    * 
    */
-  private function auth()
+  protected function auth()
   {
     if (!$this->username)
     {
@@ -1490,7 +1490,7 @@ class PhpSIP
    * Calculates WWW authorization response
    * 
    */
-  private function authWWW()
+  protected function authWWW()
   {
     if (!$this->username)
     {
@@ -1559,7 +1559,7 @@ class PhpSIP
    *
    * @return bool True on success
    */
-  private function createSocket()
+  protected function createSocket()
   { 
     $this->getPort();
     
@@ -1604,7 +1604,7 @@ class PhpSIP
    *
    * @return bool True on success
    */
-  private function closeSocket()
+  protected function closeSocket()
   {
     socket_close($this->socket);
     
@@ -1659,7 +1659,7 @@ class PhpSIP
    * 
    * @return array
    */
-  private function parseRecordRoute()
+  protected function parseRecordRoute()
   {
     $this->record_route = array();
     
@@ -1687,7 +1687,7 @@ class PhpSIP
    * 
    * @return string ro null
    */
-  private function parseContact()
+  protected function parseContact()
   {
     $output = null;
     
@@ -1713,7 +1713,7 @@ class PhpSIP
    * 
    * @return string or null
    */
-  private function parseCSeqMethod()
+  protected function parseCSeqMethod()
   {
     $output = null;
     
