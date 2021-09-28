@@ -910,7 +910,7 @@ class PhpSIP
   /**
    * Reads incoming SIP message
    */
-  protected function readMessage()
+  protected function readMessage($block = true)
   {
     $from = "";
     $port = 0;
