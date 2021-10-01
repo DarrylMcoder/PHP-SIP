@@ -48,75 +48,18 @@ try{
       $res = $api->send();
  
       if ($res == 200) {
-        
-
-// Loop continuously 
-while (true) 
-{ 
-  
-    unset($read); 
-
-    $j = 0; 
-  if(isset($client)){
-    if (count($client)) 
-    {
-        foreach ($client as $k => $v) 
-        {
-            $read[$j] = $v; 
-
-            $j++; 
-        } 
-    } 
-  }
-
-    $client = isset($read) ? $read : array(); 
-
-    if ($newsock = @socket_accept($sock)) 
-    { 
-        if (is_resource($newsock)) 
-        { 
-            socket_write($newsock, $file );
-            
-            echo "New client connected $j"; 
-
-            $client[$j] = $newsock;
-
-            $j++; 
-        } 
-    } 
-  if(isset($client)){
-    if (count($client)) 
-    {
-        foreach ($client as $k => $v) 
-        { 
-            if (@socket_recv($v, $string, 1024, MSG_DONTWAIT) === 0)
-            { 
-                unset($client[$k]);
-
-                socket_close($v); 
-            } 
-            else 
-            { 
-                if ($string) 
-                { 
-                    echo "$k: $string\n"; 
-                } 
-            } 
-        } 
-    } 
-  }
-  
-  if($api->was_recvd("BYE")){
-    $api->reply(200,"OK");
-    break;
-  }
-
-    echo ".\r\n"; 
-    ob_flush();
-    flush();
-    sleep(1); 
-} 
-
+        $ip_type = $this->media_ip_type;
+        if(!$out_sock = @socket_create($ip_type, SOCK_DGRAM, SOL_UDP)){
+          die("could not create socket ".socket_strerror(socket_last_error( $out_sock)));
+        }
+        socket_bind($out_sock,$api->get_src_ip());
+        socket_connect($out_sock,$api->media_ip,$api->media_port);
+        socket_write($out_sock,$file);
+        socket_close($out_sock);
+        // Loop continuously 
+        while (!$api->was_recvd('BYE')) {
+          
+        }
       }
  
       if ($res == 'No final response in 5 seconds.') {
