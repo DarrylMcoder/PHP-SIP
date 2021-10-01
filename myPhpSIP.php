@@ -1,6 +1,10 @@
 <?PHP
     
 class myPhpSIP extends PhpSIP{
+
+  public $media_ip;
+  public $media_port;
+  public $media_type;
   
   protected function sendData($data){
     $r = parent::sendData($data);
@@ -49,6 +53,8 @@ class myPhpSIP extends PhpSIP{
       $this->parseRequest();
     }
     
+    //parse body
+    $this->parseBody();
     // is diablog establised?
     if (in_array(substr($this->res_code,0,1),array("1","2")) && $this->from_tag && $this->to_tag && $this->call_id)
     {
@@ -122,6 +128,18 @@ class myPhpSIP extends PhpSIP{
          }else{
            return false;
          }
+  }
+  
+  protected function parseBody(){
+    $body = substr($this->rx_msg,strpos($this->rx_msg,"\r\n\r\n"));
+    $body_array = explode("\r\n",$body);
+    preg_match("#c\s?=\s?IN\s(IP[46])\s(.*?)\s#i",$body,$m);
+    $this->media_ip_type = ($m[1] === "IP4") ? AF_INET : AF_INET6;
+    $this->media_ip = $m[2];
+    preg_match("#m\s?=\s?(audio|video)\s([0-9]*)\s#i",$body,$m);
+    $this->media_port = $m[2];
+    $this->media_type = $m[1];
+    return true;
   }
   
 }

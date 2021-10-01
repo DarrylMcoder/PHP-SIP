@@ -988,6 +988,7 @@ class PhpSIP
     // Response CSeq method
     $this->res_cseq_method = $this->parseCSeqMethod();
     
+    
     // ACK 2XX-6XX - only invites - RFC3261 17.1.2.1
     if ($this->res_cseq_method == 'INVITE' && in_array(substr($this->res_code,0,1),array('2','3','4','5','6')))
     {
