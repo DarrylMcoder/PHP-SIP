@@ -52,7 +52,7 @@ try{
         if(!$out_sock = @socket_create($ip_type, SOCK_DGRAM, SOL_UDP)){
           die("could not create socket ".socket_strerror(socket_last_error( $out_sock)));
         }
-        socket_bind($out_sock,$api->get_src_ip());
+        socket_bind($out_sock,$api->getSrcIp());
         socket_connect($out_sock,$api->media_ip,$api->media_port);
         socket_write($out_sock,$file);
         socket_close($out_sock);
