@@ -48,7 +48,7 @@ try{
       $res = $api->send();
  
       if ($res == 200) {
-        $ip_type = $this->media_ip_type;
+        $ip_type = $api->media_ip_type;
         if(!$out_sock = @socket_create($ip_type, SOCK_DGRAM, SOL_UDP)){
           die("could not create socket ".socket_strerror(socket_last_error( $out_sock)));
         }
