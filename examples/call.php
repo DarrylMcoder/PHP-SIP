@@ -59,7 +59,12 @@ try{
           socket_write($out_sock,$str,strlen($str));
         }
         fclose($fp);
+        socket_recvfrom($out_sock,$data,10000,MSG_DONTWAIT);
+        echo "\nout_sock:\n".$data."\n";
         socket_close($out_sock);
+        $data = "";
+        socket_recvfrom($sock,$data,10000,MSG_DONTWAIT);
+        echo "\nsock:\n".$data."\n";
         // Loop continuously 
         while (!$api->was_recvd('BYE')) {
           sleep(1);
