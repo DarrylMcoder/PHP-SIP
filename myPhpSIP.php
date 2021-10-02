@@ -136,9 +136,11 @@ class myPhpSIP extends PhpSIP{
     preg_match("#c\s?=\s?IN\s(IP[46])\s(.*?)\s#i",$body,$m);
     $this->media_ip_type = ($m[1] === "IP4") ? AF_INET : AF_INET6;
     $this->media_ip = $m[2];
+    var_dump($m);
     preg_match("#m\s?=\s?(audio|video)\s([0-9]*)\s#i",$body,$m);
     $this->media_port = $m[2];
     $this->media_type = $m[1];
+    var_dump($m);
     return true;
   }
   
