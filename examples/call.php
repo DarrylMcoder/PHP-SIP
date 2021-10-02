@@ -62,7 +62,7 @@ try{
         socket_close($out_sock);
         // Loop continuously 
         while (!$api->was_recvd('BYE')) {
-          
+          sleep(1);
         }
       }
  
