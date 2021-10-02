@@ -54,7 +54,9 @@ class myPhpSIP extends PhpSIP{
     }
     
     //parse body
-    $this->parseBody();
+    if(strpos($this->rx_msg,"\r\n\r\n")){
+      $this->parseBody();
+    }
     // is diablog establised?
     if (in_array(substr($this->res_code,0,1),array("1","2")) && $this->from_tag && $this->to_tag && $this->call_id)
     {
