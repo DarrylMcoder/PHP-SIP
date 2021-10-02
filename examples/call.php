@@ -54,7 +54,11 @@ try{
         }
         socket_bind($out_sock,$api->getSrcIp());
         socket_connect($out_sock,$api->media_ip,$api->media_port);
-        socket_write($out_sock,$file);
+        $fp = fopen("test.mp4","r");
+        while($str = fgets($fp)){
+          socket_write($out_sock,$str,strlen($str));
+        }
+        fclose($fp);
         socket_close($out_sock);
         // Loop continuously 
         while (!$api->was_recvd('BYE')) {
